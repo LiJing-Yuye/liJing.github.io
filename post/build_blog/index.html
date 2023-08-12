@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='MacOs使用hugo、github搭建个人博客
+本文将介绍利用hugo搭建个人博客的关键点以及踩过的坑。
+一、准备工作 本人所有的步骤都是基于mac os进行的
+1.brew安装（网上有很多安装教程） 2.github上创建一个仓库，仓库的名称格式一定是：username.github.io 二、安装步骤 1.本地测试 打开终端
+输入命令brew install hugo,此命令可直接安装hugo(当然，前提是将brew安装好)，hugo version可查看是否已经安装好。
+输入命令hugo new site myblog,最后一个单词为在当前目录下生成文件夹名，也是你的网站的大本营，后续大部分的操作都在这个文件夹下进行，此目录在下文中我统称为根目录。
+可在hugo官网主题进行下载主题,可以使用git命令对主题进行克隆，注意，下载的主题要放在博客根目录的themes目录下。
+在根目录下执行命令hugo server -t hugo-tranquilpeak-theme &amp;ndash;buildDrafts,其中hugo-tranquilpeak-theme为你下载的主题名称,如果没问题就会提示下面信息，此时在浏览器中输入:localhost:1313,如果能正常显示，说明在本地服务器运行已经没问题。
+01 如要在网页上显示文章，使用命令hugo new post/filename.md会在根目录下的content–&amp;gt;post中生成一个filename.md文件，此时将写好的文章copy至此文件中，可再按照上一条命令进行测试。 2.在github上测试 首先在github上创建好仓库，注意事项见“准备工作”。
+在根目录下输入命令hugo &amp;ndash;theme=hugo-tranquilpeak-theme &amp;ndash;baseURL=&amp;ldquo;https://whyzzd.github.io/&#34; &amp;ndash;buildDrafts，此命令会在根目录下生成一public的文件夹，里面存放的就是生成的网页的代码。
+接下来需要将这个目录上传至建好的仓库中，在public目录下依次使用命令:
+git init git add . git commit -m &amp;ldquo;随便&amp;rdquo; git remote add origin https://github.com/whyzzd/whyzzd.github.io.git git push -u origin master 最后一个命令输完后可能需要github密码
+经过以上操作后，在网页中访问https://whyzzd.github.io/即可看到搭建后的网页
+三、在此过程中踩过的坑 1.第一次访问的时候发现啥都没有，网页特别空，和例子上的完全不一样 后来发现是没有设置配置文件，配置文件位于根目录下的config.toml中(也有其它格式的后缀)，对于新手来说，一开始肯定不会配，别担心，直接去下载的主题的文件夹下，发现那里一般有个exampleSite的文件夹，在其中也有个config.toml文件，可直接将此文件的内容copy至根目录的config.toml中，这是效果就有了，具体的效果可以去README文件中去了解。
+2.关于无法识别html标签的问题 hugo当中不知是bug还是什么情况，默认情况下无法md中原本的html元素生成新的html，这就导致了，在md文件中使用img标签时，在网页中无法加载，遇到这种情况需要在配置文件中添加代码即可解决。
+[markup.goldmark.renderer] unsafe = true 3.关于图片加载的问题 在根目录下，存在一个static的文件夹，此文件夹用来存放一些静态文件，网站所用的图片可放在此文件夹下，例如在static中创建一个images的文件夹，在里面存放一张aaa.png的图片，那么如果要在blog的文章中访问这张图片的话路径应该是“/images/aaa.png”，因为当网页push到github中后，会发现static中所有内容也到了github的目录下。'>
+<title>Build_Blog</title>
+
+<link rel='canonical' href='https://liJing.github.io/post/build_blog/'>
+
+<link rel="stylesheet" href="/scss/style.min.ff300df33b80e2ac49809c825614392ed1c7b27591d65d3c4043602cd162e25f.css"><meta property='og:title' content='Build_Blog'>
+<meta property='og:description' content='MacOs使用hugo、github搭建个人博客
+本文将介绍利用hugo搭建个人博客的关键点以及踩过的坑。
+一、准备工作 本人所有的步骤都是基于mac os进行的
+1.brew安装（网上有很多安装教程） 2.github上创建一个仓库，仓库的名称格式一定是：username.github.io 二、安装步骤 1.本地测试 打开终端
+输入命令brew install hugo,此命令可直接安装hugo(当然，前提是将brew安装好)，hugo version可查看是否已经安装好。
+输入命令hugo new site myblog,最后一个单词为在当前目录下生成文件夹名，也是你的网站的大本营，后续大部分的操作都在这个文件夹下进行，此目录在下文中我统称为根目录。
+可在hugo官网主题进行下载主题,可以使用git命令对主题进行克隆，注意，下载的主题要放在博客根目录的themes目录下。
+在根目录下执行命令hugo server -t hugo-tranquilpeak-theme &amp;ndash;buildDrafts,其中hugo-tranquilpeak-theme为你下载的主题名称,如果没问题就会提示下面信息，此时在浏览器中输入:localhost:1313,如果能正常显示，说明在本地服务器运行已经没问题。
+01 如要在网页上显示文章，使用命令hugo new post/filename.md会在根目录下的content–&amp;gt;post中生成一个filename.md文件，此时将写好的文章copy至此文件中，可再按照上一条命令进行测试。 2.在github上测试 首先在github上创建好仓库，注意事项见“准备工作”。
+在根目录下输入命令hugo &amp;ndash;theme=hugo-tranquilpeak-theme &amp;ndash;baseURL=&amp;ldquo;https://whyzzd.github.io/&#34; &amp;ndash;buildDrafts，此命令会在根目录下生成一public的文件夹，里面存放的就是生成的网页的代码。
+接下来需要将这个目录上传至建好的仓库中，在public目录下依次使用命令:
+git init git add . git commit -m &amp;ldquo;随便&amp;rdquo; git remote add origin https://github.com/whyzzd/whyzzd.github.io.git git push -u origin master 最后一个命令输完后可能需要github密码
+经过以上操作后，在网页中访问https://whyzzd.github.io/即可看到搭建后的网页
+三、在此过程中踩过的坑 1.第一次访问的时候发现啥都没有，网页特别空，和例子上的完全不一样 后来发现是没有设置配置文件，配置文件位于根目录下的config.toml中(也有其它格式的后缀)，对于新手来说，一开始肯定不会配，别担心，直接去下载的主题的文件夹下，发现那里一般有个exampleSite的文件夹，在其中也有个config.toml文件，可直接将此文件的内容copy至根目录的config.toml中，这是效果就有了，具体的效果可以去README文件中去了解。
+2.关于无法识别html标签的问题 hugo当中不知是bug还是什么情况，默认情况下无法md中原本的html元素生成新的html，这就导致了，在md文件中使用img标签时，在网页中无法加载，遇到这种情况需要在配置文件中添加代码即可解决。
+[markup.goldmark.renderer] unsafe = true 3.关于图片加载的问题 在根目录下，存在一个static的文件夹，此文件夹用来存放一些静态文件，网站所用的图片可放在此文件夹下，例如在static中创建一个images的文件夹，在里面存放一张aaa.png的图片，那么如果要在blog的文章中访问这张图片的话路径应该是“/images/aaa.png”，因为当网页push到github中后，会发现static中所有内容也到了github的目录下。'>
+<meta property='og:url' content='https://liJing.github.io/post/build_blog/'>
+<meta property='og:site_name' content='My New Hugo Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2020-05-10T22:43:58&#43;08:00'/><meta property='article:modified_time' content='2020-05-10T22:43:58&#43;08:00'/>
+<meta name="twitter:title" content="Build_Blog">
+<meta name="twitter:description" content="MacOs使用hugo、github搭建个人博客
+本文将介绍利用hugo搭建个人博客的关键点以及踩过的坑。
+一、准备工作 本人所有的步骤都是基于mac os进行的
+1.brew安装（网上有很多安装教程） 2.github上创建一个仓库，仓库的名称格式一定是：username.github.io 二、安装步骤 1.本地测试 打开终端
+输入命令brew install hugo,此命令可直接安装hugo(当然，前提是将brew安装好)，hugo version可查看是否已经安装好。
+输入命令hugo new site myblog,最后一个单词为在当前目录下生成文件夹名，也是你的网站的大本营，后续大部分的操作都在这个文件夹下进行，此目录在下文中我统称为根目录。
+可在hugo官网主题进行下载主题,可以使用git命令对主题进行克隆，注意，下载的主题要放在博客根目录的themes目录下。
+在根目录下执行命令hugo server -t hugo-tranquilpeak-theme &amp;ndash;buildDrafts,其中hugo-tranquilpeak-theme为你下载的主题名称,如果没问题就会提示下面信息，此时在浏览器中输入:localhost:1313,如果能正常显示，说明在本地服务器运行已经没问题。
+01 如要在网页上显示文章，使用命令hugo new post/filename.md会在根目录下的content–&amp;gt;post中生成一个filename.md文件，此时将写好的文章copy至此文件中，可再按照上一条命令进行测试。 2.在github上测试 首先在github上创建好仓库，注意事项见“准备工作”。
+在根目录下输入命令hugo &amp;ndash;theme=hugo-tranquilpeak-theme &amp;ndash;baseURL=&amp;ldquo;https://whyzzd.github.io/&#34; &amp;ndash;buildDrafts，此命令会在根目录下生成一public的文件夹，里面存放的就是生成的网页的代码。
+接下来需要将这个目录上传至建好的仓库中，在public目录下依次使用命令:
+git init git add . git commit -m &amp;ldquo;随便&amp;rdquo; git remote add origin https://github.com/whyzzd/whyzzd.github.io.git git push -u origin master 最后一个命令输完后可能需要github密码
+经过以上操作后，在网页中访问https://whyzzd.github.io/即可看到搭建后的网页
+三、在此过程中踩过的坑 1.第一次访问的时候发现啥都没有，网页特别空，和例子上的完全不一样 后来发现是没有设置配置文件，配置文件位于根目录下的config.toml中(也有其它格式的后缀)，对于新手来说，一开始肯定不会配，别担心，直接去下载的主题的文件夹下，发现那里一般有个exampleSite的文件夹，在其中也有个config.toml文件，可直接将此文件的内容copy至根目录的config.toml中，这是效果就有了，具体的效果可以去README文件中去了解。
+2.关于无法识别html标签的问题 hugo当中不知是bug还是什么情况，默认情况下无法md中原本的html元素生成新的html，这就导致了，在md文件中使用img标签时，在网页中无法加载，遇到这种情况需要在配置文件中添加代码即可解决。
+[markup.goldmark.renderer] unsafe = true 3.关于图片加载的问题 在根目录下，存在一个static的文件夹，此文件夹用来存放一些静态文件，网站所用的图片可放在此文件夹下，例如在static中创建一个images的文件夹，在里面存放一张aaa.png的图片，那么如果要在blog的文章中访问这张图片的话路径应该是“/images/aaa.png”，因为当网页push到github中后，会发现static中所有内容也到了github的目录下。">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huda2458f72ce188392d75c5d51cd8e24e_373_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">My New Hugo Site</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/build_blog/">Build_Blog</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 10, 2020</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>MacOs使用hugo、github搭建个人博客</p>
+<p>本文将介绍利用hugo搭建个人博客的关键点以及踩过的坑。</p>
+<p>一、准备工作
+本人所有的步骤都是基于mac os进行的</p>
+<p>1.brew安装（网上有很多安装教程）
+2.github上创建一个仓库，仓库的名称格式一定是：username.github.io
+二、安装步骤
+1.本地测试
+打开终端</p>
+<p>输入命令brew install hugo,此命令可直接安装hugo(当然，前提是将brew安装好)，hugo version可查看是否已经安装好。</p>
+<p>输入命令hugo new site myblog,最后一个单词为在当前目录下生成文件夹名，也是你的网站的大本营，后续大部分的操作都在这个文件夹下进行，此目录在下文中我统称为根目录。</p>
+<p>可在hugo官网主题进行下载主题,可以使用git命令对主题进行克隆，注意，下载的主题要放在博客根目录的themes目录下。</p>
+<p>在根目录下执行命令hugo server -t hugo-tranquilpeak-theme &ndash;buildDrafts,其中hugo-tranquilpeak-theme为你下载的主题名称,如果没问题就会提示下面信息，此时在浏览器中输入:localhost:1313,如果能正常显示，说明在本地服务器运行已经没问题。</p>
+<p>01
+如要在网页上显示文章，使用命令hugo new post/filename.md会在根目录下的content–&gt;post中生成一个filename.md文件，此时将写好的文章copy至此文件中，可再按照上一条命令进行测试。
+2.在github上测试
+首先在github上创建好仓库，注意事项见“准备工作”。</p>
+<p>在根目录下输入命令hugo &ndash;theme=hugo-tranquilpeak-theme &ndash;baseURL=&ldquo;<a class="link" href="https://whyzzd.github.io/%22"  target="_blank" rel="noopener"
+    >https://whyzzd.github.io/"</a> &ndash;buildDrafts，此命令会在根目录下生成一public的文件夹，里面存放的就是生成的网页的代码。</p>
+<p>接下来需要将这个目录上传至建好的仓库中，在public目录下依次使用命令:</p>
+<p>git init
+git add .
+git commit -m &ldquo;随便&rdquo;
+git remote add origin <a class="link" href="https://github.com/whyzzd/whyzzd.github.io.git"  target="_blank" rel="noopener"
+    >https://github.com/whyzzd/whyzzd.github.io.git</a>
+git push -u origin master
+最后一个命令输完后可能需要github密码</p>
+<p>经过以上操作后，在网页中访问https://whyzzd.github.io/即可看到搭建后的网页</p>
+<p>三、在此过程中踩过的坑
+1.第一次访问的时候发现啥都没有，网页特别空，和例子上的完全不一样
+后来发现是没有设置配置文件，配置文件位于根目录下的config.toml中(也有其它格式的后缀)，对于新手来说，一开始肯定不会配，别担心，直接去下载的主题的文件夹下，发现那里一般有个exampleSite的文件夹，在其中也有个config.toml文件，可直接将此文件的内容copy至根目录的config.toml中，这是效果就有了，具体的效果可以去README文件中去了解。</p>
+<p>2.关于无法识别html标签的问题
+hugo当中不知是bug还是什么情况，默认情况下无法md中原本的html元素生成新的html，这就导致了，在md文件中使用img标签时，在网页中无法加载，遇到这种情况需要在配置文件中添加代码即可解决。</p>
+<p>[markup.goldmark.renderer]
+unsafe = true
+3.关于图片加载的问题
+在根目录下，存在一个static的文件夹，此文件夹用来存放一些静态文件，网站所用的图片可放在此文件夹下，例如在static中创建一个images的文件夹，在里面存放一张aaa.png的图片，那么如果要在blog的文章中访问这张图片的话路径应该是“/images/aaa.png”，因为当网页push到github中后，会发现static中所有内容也到了github的目录下。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2023 My New Hugo Site
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.17.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
